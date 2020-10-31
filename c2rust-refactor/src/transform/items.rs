@@ -592,6 +592,11 @@ impl Transform for DeleteItems {
         }
 
         impl<'a> MutVisitor for DeleteFolder<'a> {
+            fn visit_foreign_mod(&mut self, m: &mut ForeignMod) {
+                m.items.retain(|i| !self.st.marked(i.id, self.mark));
+                mut_visit::noop_visit_foreign_mod(m, self)
+            }
+
             fn visit_mod(&mut self, m: &mut Mod) {
                 m.items.retain(|i| !self.st.marked(i.id, self.mark));
                 mut_visit::noop_visit_mod(m, self)
