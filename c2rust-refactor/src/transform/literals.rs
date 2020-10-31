@@ -98,6 +98,7 @@ impl Transform for RemoveNullTerminator {
                         LitKind::Str(ref mut s, _style) => {
                             if s.as_str().ends_with('\0') {
                                 strip_null(s);
+                            l.token.symbol = s.clone();
                             }
                         }
                         _ => {}
